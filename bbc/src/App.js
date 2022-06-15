@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import {ChakraProvider} from '@chakra-ui/react'
+import AllRoutes from './Pages/AllRoutes';
+import { extendTheme } from '@chakra-ui/react'
+import '@fontsource/poppins/400.css'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
+  const thememui = createTheme();
+  const theme = extendTheme({
+    fonts: {
+      body: `'Poppins', sans-serif`,
+    },
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <ThemeProvider theme={thememui}>
+      <ChakraProvider theme={theme}>
+        <AllRoutes/> 
+      </ChakraProvider>
+    </ThemeProvider>
+    </>
   );
 }
 
