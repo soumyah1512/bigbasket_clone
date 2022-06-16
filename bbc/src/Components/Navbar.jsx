@@ -135,9 +135,6 @@ const Navbar = () => {
                             <Box>
                             <VStack>
                                 <Box fontWeight='bold'>
-                                    My basket
-                                </Box>
-                                <Box fontWeight='bold'>
                                     {it} items
                                 </Box>
                             </VStack>
