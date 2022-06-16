@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Grid, Image, Select, Tag, Text, Tooltip } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Grid, Image, Select, Tag, Text, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 import ReCar from '../Components/ReCar'
 import { MdOutlineDeliveryDining } from "react-icons/md";
@@ -8,7 +8,8 @@ const Vegitables = () => {
     const veg = ['veg',1,2,3,4,5,6,7]
   return (
     <>
-        <Box width='72%' margin='auto' borderRadius='30px' boxShadow='lg'>
+    <Box backgroundColor='#F6F7F6'>
+        <Box width='72%' margin='auto' borderRadius='20px' boxShadow='lg' >
             <ReCar arr={veg}/>
         </Box>
         <Box width='72%' margin='10px auto'>
@@ -32,7 +33,7 @@ const Vegitables = () => {
         </Box>
         <Box width='72%' margin='10px auto'>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-                <Box border='1px solid black' padding='8px'>
+                <Box boxShadow='md' backgroundColor='white' borderRadius='10px' padding='8px'>
                     <Box border='1px solid #EEEEEE' borderRadius='9px'>
                         <Flex sx={{position: 'absolute'}}  >
                             <Box padding='5px 8px' fontSize='12px' color='white' background={'#476E01'} borderTopLeftRadius={'10px'} borderBottomRightRadius={'10px'}>
@@ -63,10 +64,25 @@ const Vegitables = () => {
                         </Text>
                         </Box>
                     </Flex>
+                    <Box border='1px solid #EEEEEE' color='grey' padding='5px' borderRadius='5px' fontSize='13px'>
+                        1 kg
+                    </Box>
+                    <Flex margin='4px 0'>
+                        <Text fontSize='14px' fontWeight='bold' color='black'>
+                            ₹20
+                        </Text>&nbsp;
+                        <Text fontSize='10px' textDecoration='line-through' color='grey'>
+                            ₹27.5
+                        </Text>
+                    </Flex>
+                    <Button variant='outline' colorScheme='red' width='100%' marginTop='10px'>
+                        Add
+                    </Button>
                 </Box>
                 
             </Grid>
         </Box>
+    </Box>
     </>
   )
 }
