@@ -12,6 +12,7 @@ import {
   } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import CartItem from '../Components/CartItem';
 import { getCart } from '../Redux/cart/action';
 
@@ -58,9 +59,11 @@ const Cart = () => {
                         </Text>
                     </VStack>
                     <Center>
+                        <Link to='/checkout'>
                         <Button bgColor='red.500' fontSize='14px' color='white' padding='0 30px'>
                             Checkout
                         </Button>
+                        </Link>
                     </Center>
                 </Flex>
             </Box>
