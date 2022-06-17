@@ -1,11 +1,29 @@
-import { Box, Button, Center, Flex, Grid, Image, Select, Tag, Text, Tooltip } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Center, Flex, Grid, Image, Select, Tag, Text, Tooltip, Spinner  } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import ReCar from '../Components/ReCar'
-import { MdOutlineDeliveryDining } from "react-icons/md";
-import { Icon } from '@chakra-ui/react'
+import Product from '../Components/Product';
+import { getPosts } from '../Redux/app/action';
+import { Pagination } from "@mui/material";
 
 const Vegitables = () => {
     const veg = ['veg',1,2,3,4,5,6,7]
+
+    const [page,setPage] = useState(1)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getPosts(page))
+    },[page])
+
+    const products = useSelector((state) => state.app.data)
+    const loading = useSelector((state) => state.app.loading)
+    console.log(products)
+
+    const handleChange = (event, value) => {
+        setPage(value);
+      };
+
   return (
     <>
     <Box backgroundColor='#F6F7F6'>
@@ -32,55 +50,19 @@ const Vegitables = () => {
             </Flex>
         </Box>
         <Box width='72%' margin='10px auto'>
+            {loading ? <><Box padding='100px'><Center><Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl'/></Center></Box></> : 
+            <>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-                <Box boxShadow='md' backgroundColor='white' borderRadius='10px' padding='8px'>
-                    <Box border='1px solid #EEEEEE' borderRadius='9px'>
-                        <Flex sx={{position: 'absolute'}}  >
-                            <Box padding='5px 8px' fontSize='12px' color='white' background={'#476E01'} borderTopLeftRadius={'10px'} borderBottomRightRadius={'10px'}>
-                                43% OFF
-                            </Box>
-                        </Flex>
-                        <Image borderRadius='9px' src='https://www.bigbasket.com/media/uploads/p/m/10000203_16-fresho-tomato-local.jpg'/>
-                    </Box>
-                    <Flex direction='row-reverse'>
-                        <Tooltip fontSize='10px' label='Get it in 5 hrs'>
-                            <Box p='1'>
-                                <Tag >
-                                    <Icon as={MdOutlineDeliveryDining} fontSize='16px' color='grey'/>&nbsp;
-                                    <Text sx={{fontSize: '12px'}} color='grey'>5 hrs</Text>
-                                </Tag>
-                            </Box>
-                        </Tooltip>
-                    </Flex>
-                    <Flex>
-                        <Text color='grey' fontSize='13px'>
-                            Fresho
-                        </Text>
-                    </Flex>
-                    <Flex>
-                        <Box width='200px' height='50px'>
-                        <Text fontSize='15px' noOfLines={2}>
-                            Onion
-                        </Text>
-                        </Box>
-                    </Flex>
-                    <Box border='1px solid #EEEEEE' color='grey' padding='5px' borderRadius='5px' fontSize='13px'>
-                        1 kg
-                    </Box>
-                    <Flex margin='4px 0'>
-                        <Text fontSize='14px' fontWeight='bold' color='black'>
-                            ₹20
-                        </Text>&nbsp;
-                        <Text fontSize='10px' textDecoration='line-through' color='grey'>
-                            ₹27.5
-                        </Text>
-                    </Flex>
-                    <Button variant='outline' colorScheme='red' width='100%' marginTop='10px'>
-                        Add
-                    </Button>
-                </Box>
-                
+                {products.map((item,ind) => (
+                    <Product item={item} key={ind}/>
+                ))}
             </Grid>
+            <Box padding='10px' marginBottom='30px'>
+                <Center>
+                    <Pagination count={3} page={page} onChange={handleChange} />
+                </Center>
+            </Box>
+            </>}
         </Box>
     </Box>
     </>

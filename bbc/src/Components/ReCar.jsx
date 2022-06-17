@@ -15,11 +15,9 @@ const ReCar = ({arr}) => {
       slidesPerView={1}
       navigation
       pagination={{ clickable: true, type: 'progressbar'}}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
     >
         {arr.map((item,ind) => (
-          <SwiperSlide>
+          <SwiperSlide key={ind}>
             <Image src={`/${arr[0]}/${ind+1}.webp`} width='100%' borderRadius='20px'/>
           </SwiperSlide>
         ))}

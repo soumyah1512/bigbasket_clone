@@ -1,15 +1,24 @@
 import { Box, Center, Flex, HStack, Image, List, ListItem, Text, VStack } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from '@chakra-ui/react'
 import { BsTelephone } from 'react-icons/bs' 
 import { IoIosPin, IoIosBasket } from "react-icons/io"; 
 import { FiUser } from "react-icons/fi";
 import { ChevronDownIcon, Search2Icon } from '@chakra-ui/icons'
 import { Button, Popover } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [it,setIt] = useState(0)
     const [anchorEl, setAnchorEl] = React.useState(null);
+    
+    const items = useSelector((state) => state.cart.data)
+    const totItems = items.length
+
+    useEffect(() => {
+        setIt(totItems)
+    },[])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,13 +30,16 @@ const Navbar = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+
+  const isAuth = useSelector((state) => state.auth.isAuth)
+
   return (
     <>
     <Box sx={{position: 'sticky', top: 0, width: '100%', zIndex: 2}}>
         <Box backgroundColor='white'>
             <Flex gap="6" direction='row-reverse' width='70%' margin='0 auto' fontSize='13px' color='#4A4A4A'>
                 <Center>
-                    <Icon as={FiUser} /> &nbsp; Login/Sign Up
+                    <Icon as={FiUser} /> &nbsp; {isAuth ? 'User':<Link to='/login'>Login</Link>}
                 </Center>
                 <Center>
                     <Icon as={IoIosPin} /> &nbsp; Bangalore
@@ -37,10 +49,12 @@ const Navbar = () => {
                 </Center>
             </Flex>
         </Box>
-        <Box borderBottom='3px solid #FAFAFA' backgroundColor='white' marginBottom='30px'>
+        <Box padding='5px' borderBottom='3px solid #FAFAFA' backgroundColor='white' marginBottom='30px'>
             <Flex  gap="6" width='72%' margin='0 auto' fontSize='13px' color='#4A4A4A' justifyContent={'space-between'}>
                 <Center>
-                    <Image src='https://www.bbassets.com/static/v2557/custPage/build/content/img/bb-icon.png'/>
+                    <Link to='/'>
+                        <Image src='https://www.bbassets.com/static/v2557/custPage/build/content/img/bb-icon.png'/>
+                    </Link>
                     <Button aria-describedby={id} onMouseMove={handleClick}>
                         SHOP <ChevronDownIcon/>
                     </Button>
@@ -61,9 +75,11 @@ const Navbar = () => {
                             <Flex boxShadow='md' fontSize='14px'>
                                 <List>
                                     <ListItem>
-                                        <Box p={1} borderBottom='2px solid #FAF4F8' width='200px'>
-                                            Fruit & Vegitables
-                                        </Box>
+                                        <Link to='/fruits-and-vegitables'>
+                                            <Box p={1} borderBottom='2px solid #FAF4F8' width='200px'>
+                                                Fruit & Vegitables
+                                            </Box>
+                                        </Link>
                                     </ListItem>
                                     <ListItem>
                                         <Box p={1} borderBottom='2px solid #FAF4F8' width='200px'>
@@ -127,6 +143,7 @@ const Navbar = () => {
                     </button>
                 </Center>
                 <Center>
+                    <Link to='/cart'>
                     <Box backgroundColor='#F3F2F3' height='95%' padding='5px 15px'>
                         <HStack>
                             <Center>
@@ -141,6 +158,7 @@ const Navbar = () => {
                             </Box>
                         </HStack>
                     </Box>
+                    </Link>
                 </Center>
             </Flex>
         </Box>
