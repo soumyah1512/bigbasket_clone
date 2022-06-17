@@ -1,17 +1,8 @@
 import React from 'react'
 import { Box, Button, Center, Flex, Image, Text, VStack } from '@chakra-ui/react'
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-  } from '@chakra-ui/react'
-import { getCart, patchcart } from '../Redux/cart/action'
+import { DeleteIcon } from '@chakra-ui/icons'
+import {Tr,Td} from '@chakra-ui/react'
+import { deleteFromcart, patchcart } from '../Redux/cart/action'
 import { useDispatch } from 'react-redux'
 
 const CartItem = ({up,setUp,item}) => {
@@ -37,8 +28,17 @@ const CartItem = ({up,setUp,item}) => {
                 dispatch
             })).then(() => setUp(prev => prev+1))
         }
+        else {
+            handleDeleteItem()
+        }
     }
-    
+
+    const handleDeleteItem = () => {
+        const id = item.id
+        deleteFromcart(({id, dispatch}))
+        .then(() => setUp(prev => prev+1))
+    }
+
   return (
     <>
         <Tr>
@@ -61,6 +61,11 @@ const CartItem = ({up,setUp,item}) => {
                         </Center>
                         <Button onClick={handlePatchCartAdd} fontSize='24px' padding='5px 5px'>+</Button>
                     </Flex>
+                    <Center padding='0 8px'>
+                    <Button onClick={handleDeleteItem} fontSize='18px' padding='5px' colorScheme={'red'}>
+                        <DeleteIcon/>
+                    </Button>
+                    </Center>
                 </Flex>
             </Td>
             <Td isNumeric>

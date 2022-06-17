@@ -19,11 +19,11 @@ export const postFailure = () => ({
     type: appActions.POST_FAILURE
 })
 
-export const getPosts = (page) => (dispatch) => {
+export const getPosts = (page,sor,ord) => (dispatch) => {
     const postRequestAction = postRequest();
     dispatch(postRequestAction)
     return axios({
-        url: `https://lyrical-repeated-snow.glitch.me/products?_limit=12&_page=${page}`,
+        url: `https://lyrical-repeated-snow.glitch.me/products?_limit=12&_page=${page}&_sort=${sor}&_order=${ord}`,
         method: "GET"
       })
         .then((res) => {

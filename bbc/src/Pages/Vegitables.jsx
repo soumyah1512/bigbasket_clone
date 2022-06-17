@@ -9,12 +9,15 @@ import { Pagination } from "@mui/material";
 const Vegitables = () => {
     const veg = ['veg',1,2,3,4,5,6,7]
 
+    const [up,setUp] = useState(1)
     const [page,setPage] = useState(1)
+    const [sor,setSor] = useState(null)
+    const [ord,setOrd] = useState(null)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getPosts(page))
-    },[page])
+        dispatch(getPosts(page,sor,ord))
+    },[page,sor,ord])
 
     const products = useSelector((state) => state.app.data)
     const loading = useSelector((state) => state.app.loading)
@@ -23,6 +26,40 @@ const Vegitables = () => {
     const handleChange = (event, value) => {
         setPage(value);
       };
+     
+      const handleSel = (e) => {
+        const selected = e.target.value
+        if(selected === 'option1')
+        {
+            setSor(null)
+            setOrd(null)
+            setPage(1)
+        }
+        if(selected === 'option2')
+        {
+            setSor('price')
+            setOrd('asc')
+            setPage(1)
+        }
+        if(selected === 'option3')
+        {
+            setSor('price')
+            setOrd('desc')
+            setPage(1)
+        }
+        if(selected === 'option4')
+        {
+            setSor('str_price')
+            setOrd('asc')
+            setPage(1)
+        }
+        if(selected === 'option5')
+        {
+            setSor('str_price')
+            setOrd('desc')
+            setPage(1)
+        }
+      }
 
   return (
     <>
@@ -40,8 +77,8 @@ const Vegitables = () => {
                 </Text>
             </Flex>
             <Flex direction='row-reverse' padding='20px 0' borderBottom='1px dashed grey'>
-                <Select width='300px'>
-                    <option value='option1' padding='10px'>Relevance</option>
+                <Select onChange={handleSel} width='300px' backgroundColor='white'>
+                    <option value='option1'>Relevance</option>
                     <option value='option2'>Pice - Low to High</option>
                     <option value='option3'>Pice - High to Low</option>
                     <option value='option4'>Rupee Saving - Low to High</option>
@@ -54,7 +91,7 @@ const Vegitables = () => {
             <>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {products.map((item,ind) => (
-                    <Product item={item} key={ind}/>
+                    <Product up={up} setUp={setUp} item={item} key={ind}/>
                 ))}
             </Grid>
             <Box padding='10px' marginBottom='30px'>

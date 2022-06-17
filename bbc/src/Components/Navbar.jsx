@@ -14,11 +14,12 @@ const Navbar = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     
     const items = useSelector((state) => state.cart.data)
-    const totItems = items.length
+    // const tot = items.length
 
     useEffect(() => {
-        setIt(totItems)
-    },[])
+        var tot = items.length
+        setIt((prev)=> prev=tot)
+    },[items,setIt])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

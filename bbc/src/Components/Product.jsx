@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Button, Center, Flex, Grid, Image, Select, Tag, Text, Tooltip } from '@chakra-ui/react'
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { Icon } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux';
-import { addTocart } from '../Redux/cart/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTocart, getCart } from '../Redux/cart/action';
 
-const Product = ({item}) => {
+const Product = ({up,setUp,item}) => {
     const dispatch = useDispatch()
 
     const handleAddToCart = () => {
         addTocart(({
             item,
             dispatch
-        }))
+        })).then(()=>  dispatch(getCart()))
     }
 
   return (
